@@ -15,13 +15,13 @@ jobs:
     - uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
       with:
         reports: "${{ github.workspace }}/**/*coverage.xml"
-        targetdir: "${{ github.workspace }}/**/coverage"
+        targetdir: "${{ github.workspace }}/coveragereport"
         reporttypes: HtmlInline
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: CoverageReport
-        path: "${{ github.workspace }}/**/coverage"
+        path: "${{ github.workspace }}/coveragereport"
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
