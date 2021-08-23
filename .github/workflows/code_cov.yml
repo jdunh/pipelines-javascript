@@ -1,0 +1,29 @@
+name: build-playground/jdunham-playground
+on:
+  push:
+    branches:
+    - main
+jobs:
+  Job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - run: npm run build
+    - uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
+      with:
+        reports: "${{ github.workspace }}/**/*coverage.xml"
+        targetdirs: "${{ github.workspace }}/**/coverage"
+        reporttypes: HtmlInline
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: CoverageReport
+        path: "${{ github.workspace }}/**/coverage"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: CoverageReportFiles
+        path: "${{ github.workspace }}/**/server.js"
