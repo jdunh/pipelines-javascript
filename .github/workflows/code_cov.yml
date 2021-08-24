@@ -14,7 +14,7 @@ jobs:
     - run: npm run build
     - name: generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
-      continue-on-error: true
+      continue-on-error: false
       with:
         reports: "${{ github.workspace }}/**/*no_coverage.xml"
         targetdir: coveragereport_${{ github.run_number }}
