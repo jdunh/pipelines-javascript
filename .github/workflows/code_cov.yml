@@ -28,3 +28,5 @@ jobs:
       with:
         name: CoverageReportFiles
         path: "${{ github.workspace }}/**/server.js"
+    - name: do something
+      run: echo "something"
