@@ -5,30 +5,26 @@ on:
     - main
 jobs:
   Job:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
     - name: Install dependencies
       run: npm install
     - run: npm run build
-    - uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
+    - name: generate coverage report
+      uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
       with:
         reports: "${{ github.workspace }}/**/*coverage.xml"
-        targetdir: "${{ github.workspace }}/coveragereport"
-        reporttypes: HtmlInline;Xml
-    - name: Upload Artifact
+        targetdir: coveragereport_${{ github.run_number }}
+        reporttypes: HtmlInline
+    - name: upload CoverageReport
       uses: actions/upload-artifact@v2
       with:
         name: CoverageReport
-        path: "${{ github.workspace }}/coveragereport"
-    - name: Upload Artifact
+        path: coveragereport_${{ github.run_number }}
+    - name: upload CoverageReportFiles
       uses: actions/upload-artifact@v2
       with:
         name: CoverageReportFiles
         path: "${{ github.workspace }}/**/server.js"
-    - uses: 5monkeys/cobertura-action@master
-      with:
-        path: ${{ github.workspace }}/coveragereport/Summary.xml
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        minimum_coverage: 75
