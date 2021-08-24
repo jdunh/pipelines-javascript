@@ -16,7 +16,7 @@ jobs:
       with:
         reports: "${{ github.workspace }}/**/*coverage.xml"
         targetdir: "${{ github.workspace }}/coveragereport"
-        reporttypes: HtmlInline
+        reporttypes: HtmlInline;Xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -27,3 +27,8 @@ jobs:
       with:
         name: CoverageReportFiles
         path: "${{ github.workspace }}/**/server.js"
+    - uses: 5monkeys/cobertura-action@master
+      with:
+        path: ${{ github.workspace }}/coveragereport/Summary.xml
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        minimum_coverage: 75
