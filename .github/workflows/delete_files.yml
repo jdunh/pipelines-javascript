@@ -11,18 +11,19 @@ jobs:
       uses: actions/github-script@v3
       env:
         FILE_PATTERNS: |
-          *.js
-          tests/
-          **/bin/*
-          *.json
+          some/file
+          tests
+          **.json
+          **.js
+          node_modules
       with:
         script: |-
-          const fs = require('fs').promises
-          const path = require('path')
-          const patterns = process.env.FILE_PATTERNS
-          const globber = await glob.create(patterns)
-          for await (const file of globber.globGenerator()) {
-            if ((await fs.lstat(file)).isDirectory()) continue
-            await io.rmRF(file)
+          const globber = await glob.create(patterns.replace(/,/g, "\n"))
+          const files = await globber.glob()
+          files.sort(file => fs.lstatSync(file).isDirectory() ? 1 : -1)
+          for (file of files) {
+              console.log(`deleting ${file}`)
+              await io.rmRF(file)
           }
     - run: ls .
+    - run: tree
