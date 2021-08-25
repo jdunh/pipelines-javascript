@@ -18,6 +18,8 @@ jobs:
           node_modules
       with:
         script: |-
+          const fs = require('fs')
+          
           const patterns = process.env.FILE_PATTERNS
           const globber = await glob.create(patterns.replace(/,/g, "\n"))
           const files = await globber.glob()
