@@ -1,8 +1,5 @@
 name: build-playground/jdunham-playground
-on:
-  push:
-    branches:
-    - main
+on: [workflow_dispatch]
 jobs:
   Job:
     runs-on: ubuntu-latest
