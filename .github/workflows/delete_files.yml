@@ -1,0 +1,30 @@
+name: DeleteFiles
+on:
+  push:
+    branches:
+    - master
+jobs:
+  Job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - run: ls .
+    - name: delete files
+      uses: actions/github-script@v3
+      env:
+        FILE_PATTERNS: |
+          some/file
+          tests
+          **/bin/*
+      with:
+        script: |-
+          const fs = require('fs').promises
+          const path = require('path')
+          const patterns = process.env.FILE_PATTERNS
+          const globber = await glob.create(patterns)
+          for await (const file of globber.globGenerator()) {
+            if ((await fs.lstat(file)).isDirectory()) continue
+            await io.rmRF(file)
+          }
+    - run: ls .
