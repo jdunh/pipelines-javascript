@@ -10,23 +10,22 @@ jobs:
     - name: delete files
       uses: actions/github-script@v3
       env:
+        SOURCE_FOLDER: "."
         FILE_PATTERNS: |
-          some/file
+          *.js
           tests
-          **.json
-          **.js
-          node_modules
+          **/bin/*
       with:
         script: |-
-          const fs = require('fs')
-          
-          const patterns = process.env.FILE_PATTERNS
+          const fs = require('fs').promises
+          const path = require('path')
+          const target = path.resolve(process.env.TARGET_LOCATION)
+          process.chdir(process.env.SOURCE_FOLDER)
           const globber = await glob.create(patterns.replace(/,/g, "\n"))
           const files = await globber.glob()
           files.sort(file => fs.lstatSync(file).isDirectory() ? 1 : -1)
           for (file of files) {
-              console.log(`deleting ${file}`)
-              await io.rmRF(file)
+            console.log(`deleting ${file}`)
+            await io.rmRF(file)
           }
     - run: ls .
-    - run: tree
