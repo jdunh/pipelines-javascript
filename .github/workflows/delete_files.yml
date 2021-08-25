@@ -11,9 +11,10 @@ jobs:
       uses: actions/github-script@v3
       env:
         FILE_PATTERNS: |
-          some/file
-          tests
+          *.js
+          tests/
           **/bin/*
+          *.json
       with:
         script: |-
           const fs = require('fs').promises
