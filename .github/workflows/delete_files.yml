@@ -17,8 +17,8 @@ jobs:
         script: |-
           const fs = require('fs')
           const path = require('path')
-          const patterns = path.resolve(process.env.FILE_PATTERNS)
           process.chdir(process.env.SOURCE_FOLDER)
+          const patterns = path.resolve(process.env.FILE_PATTERNS)
           const globber = await glob.create(patterns)
           const files = await globber.glob()
           files.sort(file => fs.lstatSync(file).isDirectory() ? 1 : -1)
