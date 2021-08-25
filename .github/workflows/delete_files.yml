@@ -19,7 +19,7 @@ jobs:
           const path = require('path')
           const target = path.resolve(process.env.TARGET_LOCATION)
           process.chdir(process.env.SOURCE_FOLDER)
-          const globber = await glob.create(patterns.replace(/,/g, "\n"))
+          const globber = await glob.create(patterns)
           const files = await globber.glob()
           files.sort(file => fs.lstatSync(file).isDirectory() ? 1 : -1)
           for (file of files) {
