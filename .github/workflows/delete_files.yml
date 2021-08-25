@@ -12,9 +12,7 @@ jobs:
       env:
         SOURCE_FOLDER: "."
         FILE_PATTERNS: |
-          *.js
-          tests
-          **/bin/*
+          **/*.js
       with:
         script: |-
           const fs = require('fs').promises
