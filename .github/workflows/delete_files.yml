@@ -17,6 +17,7 @@ jobs:
         FILE_PATTERNS: |-
           myFileShare
           *git*
+          !**/.*
       with:
         script: |-
           const fs = require('fs')
