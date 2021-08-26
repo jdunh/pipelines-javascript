@@ -6,24 +6,39 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: ls .
+    - run: |
+        ls .
+        pwd
     - name: delete files
       uses: actions/github-script@v3
       env:
-        SOURCE_FOLDER: "./tests"
-        FILE_PATTERNS: |
-          **/*.js
+        REMOVE_SOURCE_FOLDER: true
+        SOURCE_FOLDER: "."
+        FILE_PATTERNS: |-
+          tests
+          *.js
       with:
         script: |-
           const fs = require('fs')
           const path = require('path')
-          process.chdir(process.env.SOURCE_FOLDER)
+          const sourceFolder = process.env.SOURCE_FOLDER
+          process.chdir(sourceFolder)
+          const removeSourceFolder = process.env.REMOVE_SOURCE_FOLDER
           const patterns = path.resolve(process.env.FILE_PATTERNS)
           const globber = await glob.create(patterns)
           const files = await globber.glob()
           files.sort(file => fs.lstatSync(file).isDirectory() ? 1 : -1)
           for (file of files) {
-            console.log(`deleting ${file}`)
-            await io.rmRF(file)
+              console.log(`deleting ${file}`)
+              await io.rmRF(file)
           }
-    - run: ls .
+          if (removeSourceFolder && soureFolder !== ".") {
+              if (fs.readdirSync(".").length === 0) {
+                  process.chdir("${{ github.workspace }}")
+                  console.log(`deleting ${soureFolder}`)
+                  await io.rmRF(sourceFolder)
+              }
+          }
+    - run: |-
+        ls .
+        pwd
