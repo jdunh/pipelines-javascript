@@ -12,8 +12,8 @@ jobs:
     - name: Delete files
       uses: actions/github-script@v4
       env:
-        REMOVE_SOURCE_FOLDER: false
-        SOURCE_FOLDER: "."
+        REMOVE_SOURCE_FOLDER: true
+        SOURCE_FOLDER: tests
         FILE_PATTERNS: |-
           tests
           *.json
