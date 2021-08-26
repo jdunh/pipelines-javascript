@@ -15,8 +15,8 @@ jobs:
         REMOVE_SOURCE_FOLDER: false
         SOURCE_FOLDER: "."
         FILE_PATTERNS: |-
-          myFileShare
-          *git*
+          tests
+          *.json
           !**/.*
       with:
         script: |-
