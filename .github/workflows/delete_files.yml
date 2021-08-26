@@ -32,7 +32,7 @@ jobs:
               console.log(`deleting ${file}`)
               await io.rmRF(file)
           }
-          if (removeSourceFolder == true && sourceFolder !== ".") {
+          if (removeSourceFolder == "true" && sourceFolder !== ".") {
               if (fs.readdirSync(".").length === 0) {
                   process.chdir("${{ github.workspace }}")
                   console.log(`deleting ${sourceFolder}`)
