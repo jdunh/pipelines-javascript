@@ -13,11 +13,10 @@ jobs:
       uses: actions/github-script@v3
       env:
         REMOVE_SOURCE_FOLDER: true
-        SOURCE_FOLDER: "tests"
+        SOURCE_FOLDER: "."
         FILE_PATTERNS: |-
           myFileShare
-          *.js
-          tests
+          *git*
       with:
         script: |-
           const fs = require('fs')
@@ -26,7 +25,6 @@ jobs:
           const removeSourceFolder = process.env.REMOVE_SOURCE_FOLDER
           const globber = await glob.create(process.env.FILE_PATTERNS)
           const files = await globber.glob()
-          console.log(process.cwd())
           files.sort().reverse()
           for (file of files) {
               console.log(`deleting ${file}`)
@@ -36,7 +34,6 @@ jobs:
               if (fs.readdirSync(".").length === 0) {
                   process.chdir("${{ github.workspace }}")
                   console.log(`deleting ${sourceFolder}`)
-                  console.log(process.cwd())
                   await io.rmRF(sourceFolder)
               }
           }
