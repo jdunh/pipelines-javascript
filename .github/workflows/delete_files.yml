@@ -25,6 +25,7 @@ jobs:
           process.chdir(sourceFolder)
           const removeSourceFolder = process.env.REMOVE_SOURCE_FOLDER
           const patterns = path.resolve(process.env.FILE_PATTERNS)
+          console.log(patterns)
           const globber = await glob.create(patterns)
           const files = await globber.glob()
           files.sort(file => fs.lstatSync(file).isDirectory() ? 1 : -1)
