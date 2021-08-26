@@ -20,11 +20,10 @@ jobs:
       with:
         script: |-
           const fs = require('fs')
-          const path = require('path')
           const sourceFolder = process.env.SOURCE_FOLDER
           process.chdir(sourceFolder)
           const removeSourceFolder = process.env.REMOVE_SOURCE_FOLDER
-          const patterns = path.resolve(process.env.FILE_PATTERNS)
+          const patterns = process.env.FILE_PATTERNS
           console.log(patterns)
           const globber = await glob.create(patterns)
           const files = await globber.glob()
