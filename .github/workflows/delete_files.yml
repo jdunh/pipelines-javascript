@@ -13,7 +13,7 @@ jobs:
       uses: actions/github-script@v3
       env:
         REMOVE_SOURCE_FOLDER: true
-        SOURCE_FOLDER: "."
+        SOURCE_FOLDER: "tests"
         FILE_PATTERNS: |-
           tests
           *.js
