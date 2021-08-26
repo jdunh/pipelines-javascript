@@ -16,7 +16,7 @@ jobs:
         SOURCE_FOLDER: tests
         FILE_PATTERNS: |-
           tests
-          *.json
+          *.js
           !**/.*
       with:
         script: |-
